@@ -1,5 +1,6 @@
 package org.bukkit.event;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 
 /**
@@ -31,6 +32,14 @@ public abstract class Event {
         this.async = isAsync;
     }
 
+    public boolean callEvent() {
+        Bukkit.getPluginManager().callEvent(this);
+        if (this instanceof Cancellable) {
+            return !((Cancellable) this).isCancelled();
+        } else {
+            return true;
+        }
+    }
     /**
      * Convenience method for providing a user-friendly identifier. By
      * default, it is the event's class's {@linkplain Class#getSimpleName()
