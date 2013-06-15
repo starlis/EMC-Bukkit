@@ -16,6 +16,16 @@ public class EntityShootBowEvent extends EntityEvent implements Cancellable {
     private Entity projectile;
     private final float force;
     private boolean cancelled;
+    // EMC start
+    private boolean consumeArrow = true;
+    public boolean getConsumeArrow() {
+        return consumeArrow;
+    }
+
+    public void setConsumeArrow(boolean consumeArrow) {
+        this.consumeArrow = consumeArrow;
+    }
+    // EMC end
 
     public EntityShootBowEvent(final LivingEntity shooter, final ItemStack bow, final Projectile projectile, final float force) {
         super(shooter);
