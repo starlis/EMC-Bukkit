@@ -319,15 +319,21 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
      * @param stack the item stack to compare to
      * @return true if the two stacks are equal, ignoring the amount
      */
+    // EMC start
     @Utility
     public boolean isSimilar(ItemStack stack) {
+        return isSimilar(stack, false);
+    }
+    @Utility
+    public boolean isSimilar(ItemStack stack, boolean skipDur) {
+    // EMC end
         if (stack == null) {
             return false;
         }
         if (stack == this) {
             return true;
         }
-        return getTypeId() == stack.getTypeId() && getDurability() == stack.getDurability() && hasItemMeta() == stack.hasItemMeta() && (hasItemMeta() ? Bukkit.getItemFactory().equals(getItemMeta(), stack.getItemMeta()) : true);
+        return getTypeId() == stack.getTypeId() && (skipDur || getDurability() == stack.getDurability()) && hasItemMeta() == stack.hasItemMeta() && (hasItemMeta() ? Bukkit.getItemFactory().equals(getItemMeta(), stack.getItemMeta()) : true); // EMC
     }
 
     @Override
