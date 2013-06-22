@@ -47,6 +47,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public interface Server extends PluginMessageRecipient {
 
+    public org.bukkit.command.SimpleCommandMap getCommandMap(); // EMC
     /**
      * Used for all administrative messages, such as an operator using a
      * command.
