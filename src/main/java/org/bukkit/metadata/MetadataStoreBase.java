@@ -114,7 +114,7 @@ public abstract class MetadataStoreBase<T> {
         Validate.notNull(owningPlugin, "Plugin cannot be null");
         for (Map<Plugin, MetadataValue> values : metadataMap.values()) {
             if (values.containsKey(owningPlugin)) {
-                values.get(owningPlugin).invalidate();
+                values.remove(owningPlugin); // Spigot - Remove bad metadata, invalidate() is not implemented
             }
         }
     }
