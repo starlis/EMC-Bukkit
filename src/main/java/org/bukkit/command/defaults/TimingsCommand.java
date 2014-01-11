@@ -10,6 +10,7 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
@@ -185,6 +186,17 @@ public class TimingsCommand extends BukkitCommand {
             this.sender = sender;
             this.bout = bout;
         }
+
+        // EMC start
+        @Override
+        public synchronized void start() {
+            if (sender instanceof RemoteConsoleCommandSender) {
+                run();
+            } else {
+                super.start();
+            }
+        }
+        // EMC end
 
         @Override
         public void run()
