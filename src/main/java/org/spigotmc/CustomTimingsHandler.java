@@ -171,5 +171,7 @@ public class CustomTimingsHandler
         violations = 0;
         curTickTotal = 0;
         totalTime = 0;
+        start = 0;
+        timingDepth = 0;
     }
 }
