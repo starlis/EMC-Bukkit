@@ -111,6 +111,15 @@ public class ShapedRecipe implements Recipe {
         return this;
     }
 
+    // EMC start
+    public ShapedRecipe setIngredient(char key, ItemStack item) {
+        Validate.isTrue(ingredients.containsKey(key), "Symbol does not appear in the shape:", key);
+
+        ingredients.put(key, item);
+        return this;
+    }
+    // EMC end
+
     /**
      * Get a copy of the ingredients map.
      *
