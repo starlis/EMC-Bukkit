@@ -1,5 +1,6 @@
 package org.spigotmc;
 
+import org.bukkit.command.defaults.TimingsCommand;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredListener;
@@ -7,6 +8,10 @@ import org.bukkit.plugin.TimedRegisteredListener;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
@@ -17,7 +22,7 @@ public class CustomTimingsHandler
 {
 
     private static final Collection<CustomTimingsHandler> ALL_HANDLERS = new HashSet<CustomTimingsHandler>();
-    private static CustomTimingsHandler[] BAKED_HANDLERS;
+    private static Queue<CustomTimingsHandler> BAKED_HANDLERS = new ConcurrentLinkedQueue<CustomTimingsHandler>(); // EMC
     /*========================================================================*/
     private final String name;
     private final CustomTimingsHandler parent;
@@ -37,8 +42,8 @@ public class CustomTimingsHandler
     {
         this.name = name;
         this.parent = parent;
-        ALL_HANDLERS.add( this );
-        BAKED_HANDLERS = ALL_HANDLERS.toArray( new CustomTimingsHandler[ ALL_HANDLERS.size() ] );
+        BAKED_HANDLERS.add( this ); // EMC
+        //BAKED_HANDLERS = ALL_HANDLERS.toArray( new CustomTimingsHandler[ ALL_HANDLERS.size() ] ); // EMC
     }
 
     /**
@@ -85,6 +90,7 @@ public class CustomTimingsHandler
                 timings.reset();
             }
         }
+        TimingsCommand.timingStart = System.nanoTime();
     }
 
     /**
@@ -103,22 +109,6 @@ public class CustomTimingsHandler
                 }
                 timings.curTickTotal = 0;
                 timings.timingDepth = 0; // incase reset messes this up
-            }
-
-            for ( Plugin plugin : Bukkit.getPluginManager().getPlugins() )
-            {
-                for ( RegisteredListener listener : HandlerList.getRegisteredListeners( plugin ) )
-                {
-                    if ( listener instanceof TimedRegisteredListener )
-                    {
-                        TimedRegisteredListener timings = (TimedRegisteredListener) listener;
-                        if ( timings.curTickTotal > 50000000 )
-                        {
-                            timings.violations += Math.ceil( timings.curTickTotal / 50000000 );
-                        }
-                        timings.curTickTotal = 0;
-                    }
-                }
             }
         }
     }

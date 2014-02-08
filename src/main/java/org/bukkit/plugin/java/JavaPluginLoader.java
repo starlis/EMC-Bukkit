@@ -39,6 +39,7 @@ import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.TimedRegisteredListener;
 import org.bukkit.plugin.UnknownDependencyException;
+import org.spigotmc.CustomTimingsHandler; // Spigot
 import org.yaml.snakeyaml.error.YAMLException;
 
 /**
@@ -49,6 +50,7 @@ public final class JavaPluginLoader implements PluginLoader {
     private final Pattern[] fileFilters = new Pattern[] { Pattern.compile("\\.jar$"), };
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
     private final Map<String, PluginClassLoader> loaders = new LinkedHashMap<String, PluginClassLoader>();
+    public static final CustomTimingsHandler pluginParentTimer = new CustomTimingsHandler("** Plugins");
 
     /**
      * This class was not meant to be constructed explicitly
@@ -282,14 +284,16 @@ public final class JavaPluginLoader implements PluginLoader {
                     break;
                 }
             }
-
+            final CustomTimingsHandler timings = new CustomTimingsHandler("Plugin: " + plugin.getDescription().getFullName() + " Event: " + listener.getClass().getName() + "::" + method.getName()+"("+eventClass.getSimpleName()+")", pluginParentTimer); // Spigot
             EventExecutor executor = new EventExecutor() {
                 public void execute(Listener listener, Event event) throws EventException {
                     try {
                         if (!eventClass.isAssignableFrom(event.getClass())) {
                             return;
                         }
+                        timings.startTiming(); // Spigot
                         method.invoke(listener, event);
+                        timings.stopTiming(); // Spigot
                     } catch (InvocationTargetException ex) {
                         throw new EventException(ex.getCause());
                     } catch (Throwable t) {
@@ -297,7 +301,7 @@ public final class JavaPluginLoader implements PluginLoader {
                     }
                 }
             };
-            if (true) { // Spigot - TRL handles useTimings check now
+            if (false) { // Spigot - RL handles useTimings check now
                 eventSet.add(new TimedRegisteredListener(listener, executor, eh.priority(), plugin, eh.ignoreCancelled()));
             } else {
                 eventSet.add(new RegisteredListener(listener, executor, eh.priority(), plugin, eh.ignoreCancelled()));
