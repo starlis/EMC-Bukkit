@@ -1,6 +1,8 @@
 package org.bukkit;
 
 import java.io.File;
+
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.generator.ChunkGenerator;
 import java.util.Collection;
 import java.util.HashMap;
@@ -343,6 +345,7 @@ public interface World extends PluginMessageRecipient, Metadatable {
      * @return Resulting Entity of this method, or null if it was unsuccessful
      */
     public Entity spawnEntity(Location loc, EntityType type);
+    public Entity spawnEntity(Location loc, EntityType type, CreatureSpawnEvent.SpawnReason reason); // EMC
 
     /**
      * Creates a creature at the given {@link Location}
