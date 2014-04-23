@@ -16,6 +16,7 @@ import org.bukkit.projectiles.ProjectileSource;
  */
 public interface LivingEntity extends Entity, Damageable, ProjectileSource {
 
+    public org.bukkit.inventory.ItemStack getLoot(); // EMC
     /**
      * Gets the height of the living entity's eyes above its Location.
      *
