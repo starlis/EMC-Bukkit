@@ -20,9 +20,18 @@ public class ReloadCommand extends BukkitCommand {
     public boolean execute(CommandSender sender, String currentAlias, String[] args) {
         if (!testPermission(sender)) return true;
 
+        org.spigotmc.CustomTimingsHandler.reload(); // Spigot: TODO: Why is this here?
         Bukkit.reload();
         Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Reload complete.");
 
         return true;
     }
+
+    // Spigot Start
+    @Override
+    public java.util.List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException
+    {
+        return java.util.Collections.emptyList();
+    }
+    // Spigot End
 }
