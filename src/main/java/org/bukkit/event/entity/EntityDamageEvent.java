@@ -135,7 +135,7 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
         for (DamageModifier modifier : MODIFIERS) {
             damage += getDamage(modifier);
         }
-        return damage;
+        return Math.max(damage, 0); // Spigot
     }
 
     /**
