@@ -5,6 +5,8 @@ package org.bukkit.entity;
  */
 public interface TNTPrimed extends Explosive {
 
+    public org.bukkit.Location getSourceLoc(); // Spigot
+
     /**
      * Set the number of ticks until the TNT blows up after being primed.
      *
