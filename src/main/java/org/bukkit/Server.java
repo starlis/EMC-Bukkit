@@ -916,6 +916,11 @@ public interface Server extends PluginMessageRecipient {
         {
             throw new UnsupportedOperationException( "Not supported yet." );
         }
+
+        public double[] getTPS()
+        {
+            throw new UnsupportedOperationException( "Not supported yet." );
+        }
     }
 
     Spigot spigot();
