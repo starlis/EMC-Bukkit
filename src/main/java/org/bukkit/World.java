@@ -346,6 +346,8 @@ public interface World extends PluginMessageRecipient, Metadatable {
      */
     public Entity spawnEntity(Location loc, EntityType type);
     public Entity spawnEntity(Location loc, EntityType type, CreatureSpawnEvent.SpawnReason reason); // EMC
+    public Entity spawnEntity(Location loc, EntityType type, com.google.common.base.Predicate<Entity> prepare); // EMC
+    public Entity spawnEntity(Location loc, EntityType type, CreatureSpawnEvent.SpawnReason reason, com.google.common.base.Predicate<Entity> prepare); // EMC
 
     /**
      * Creates a creature at the given {@link Location}
