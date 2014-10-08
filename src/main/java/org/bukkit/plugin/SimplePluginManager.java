@@ -307,7 +307,6 @@ public final class SimplePluginManager implements PluginManager {
             }
         }
 
-        org.bukkit.command.defaults.TimingsCommand.timingStart = System.nanoTime(); // Spigot
         return result.toArray(new Plugin[result.size()]);
     }
 
@@ -344,7 +343,7 @@ public final class SimplePluginManager implements PluginManager {
 
         if (result != null) {
             plugins.add(result);
-            lookupNames.put(result.getDescription().getName(), result);
+            lookupNames.put(result.getDescription().getName().toLowerCase(), result); // Spigot
         }
 
         return result;
@@ -370,7 +369,7 @@ public final class SimplePluginManager implements PluginManager {
      * @return Plugin if it exists, otherwise null
      */
     public synchronized Plugin getPlugin(String name) {
-        return lookupNames.get(name.replace(' ', '_'));
+        return lookupNames.get(name.replace(' ', '_').toLowerCase()); // Spigot
     }
 
     public synchronized Plugin[] getPlugins() {
@@ -568,7 +567,8 @@ public final class SimplePluginManager implements PluginManager {
             throw new IllegalPluginAccessException("Plugin attempted to register " + event + " while not enabled");
         }
 
-        if (useTimings) {
+        executor = new org.spigotmc.timings.TimedEventExecutor(executor, plugin, null, event); // Spigot
+        if (false) { // Spigot - RL handles useTimings check now
             getEventListeners(event).register(new TimedRegisteredListener(listener, executor, priority, plugin, ignoreCancelled));
         } else {
             getEventListeners(event).register(new RegisteredListener(listener, executor, priority, plugin, ignoreCancelled));
@@ -729,7 +729,7 @@ public final class SimplePluginManager implements PluginManager {
     }
 
     public boolean useTimings() {
-        return useTimings;
+        return org.spigotmc.timings.Timings.isTimingsEnabled(); // Spigot
     }
 
     /**
@@ -738,6 +738,6 @@ public final class SimplePluginManager implements PluginManager {
      * @param use True if per event timing code should be used
      */
     public void useTimings(boolean use) {
-        useTimings = use;
+        org.spigotmc.timings.Timings.setTimingsEnabled(use); // Spigot
     }
 }

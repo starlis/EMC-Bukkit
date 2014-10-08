@@ -912,9 +912,12 @@ public interface Server extends PluginMessageRecipient {
     public class Spigot
     {
 
-        public org.bukkit.configuration.file.YamlConfiguration getConfig()
+        public org.bukkit.configuration.file.YamlConfiguration getBukkitConfig()
         {
             throw new UnsupportedOperationException( "Not supported yet." );
+        }
+        public org.bukkit.configuration.file.YamlConfiguration getSpigotConfig() {
+            throw new UnsupportedOperationException("Not supported yet.");
         }
 
         public double[] getTPS()
