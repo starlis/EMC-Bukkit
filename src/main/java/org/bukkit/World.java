@@ -131,6 +131,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
      */
     public Chunk getChunkAt(Block block);
 
+    // EMC start
+    public static interface ChunkLoadCallback {
+        public void onLoad(Chunk chunk);
+    }
+    public void getChunkAtAsync(int x, int z, ChunkLoadCallback cb);
+    public void getChunkAtAsync(Location location, ChunkLoadCallback cb);
+    public void getChunkAtAsync(Block block, ChunkLoadCallback cb);
+    // EMC end
+
     /**
      * Checks if the specified {@link Chunk} is loaded
      *
