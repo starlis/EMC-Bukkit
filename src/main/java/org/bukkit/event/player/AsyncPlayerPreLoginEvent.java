@@ -15,7 +15,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private Result result;
     private String message;
-    private final String name;
+    private String name; // EMC
     private final InetAddress ipAddress;
     private final UUID uniqueId;
 
@@ -138,6 +138,7 @@ public class AsyncPlayerPreLoginEvent extends Event {
     public String getName() {
         return name;
     }
+    public void setName(String name) { this.name = name; } // EMC
 
     /**
      * Gets the player IP address.
